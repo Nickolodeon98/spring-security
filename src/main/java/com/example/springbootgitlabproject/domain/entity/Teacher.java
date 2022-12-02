@@ -20,6 +20,8 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String userName;
+    private String password;
     private String name;
     private int age;
 

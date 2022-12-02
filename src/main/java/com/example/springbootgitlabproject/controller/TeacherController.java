@@ -1,6 +1,7 @@
 package com.example.springbootgitlabproject.controller;
 
 import com.example.springbootgitlabproject.domain.Response;
+import com.example.springbootgitlabproject.domain.dto.TeacherRequestDto;
 import com.example.springbootgitlabproject.domain.dto.TeacherResponseDto;
 import com.example.springbootgitlabproject.service.TeacherService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,8 @@ public class TeacherController {
     }
 
     @PostMapping("/test")
-    public Response<TeacherResponseDto> register(@RequestParam String name, @RequestParam int age) {
-        return Response.success(teacherService.addTeacherInfo(name, age));
+    public Response<TeacherResponseDto> register(@RequestBody TeacherRequestDto teacherRequestDto) {
+        TeacherResponseDto teacherResponseDto = teacherService.addTeacherInfo(teacherRequestDto);
+        return Response.success(teacherResponseDto);
     }
 }
