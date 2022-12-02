@@ -1,11 +1,11 @@
 package com.example.springbootgitlabproject.controller;
 
+import com.example.springbootgitlabproject.domain.Response;
+import com.example.springbootgitlabproject.domain.dto.TeacherResponseDto;
 import com.example.springbootgitlabproject.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +20,10 @@ public class TeacherController {
     @GetMapping
     public String get() {
         return "Hello";
+    }
+
+    @PostMapping("/test")
+    public Response<TeacherResponseDto> register(@RequestParam String name, @RequestParam int age) {
+        return Response.success(teacherService.addTeacherInfo(name, age));
     }
 }
