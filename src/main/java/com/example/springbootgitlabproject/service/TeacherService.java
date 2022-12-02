@@ -42,7 +42,8 @@ public class TeacherService {
         Teacher foundTeacher = teacherRepository.findByUserName(userName)
                 .orElseThrow(()->new TeacherException(ErrorCode.NOT_FOUND_ERROR, ErrorCode.NOT_FOUND_ERROR.getMessage()));
 //        TODO: 비밀번호가 틀렸을 시 에러로 처리한다.
-        if (!foundTeacher.getPassword().equals(password)) throw new TeacherException(ErrorCode.PASSWORD_ERROR, ErrorCode.PASSWORD_ERROR.getMessage());
+        if (!pwdEncoder.matches(password, foundTeacher.getPassword()))
+            throw new TeacherException(ErrorCode.PASSWORD_ERROR, ErrorCode.PASSWORD_ERROR.getMessage());
 //        TODO: 성공 시 토큰을 발급한다.
         return "";
     }
