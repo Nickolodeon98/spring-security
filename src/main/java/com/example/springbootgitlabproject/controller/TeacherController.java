@@ -6,6 +6,7 @@ import com.example.springbootgitlabproject.domain.dto.TeacherResponseDto;
 import com.example.springbootgitlabproject.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.config.RepositoryConfigurationSource;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,5 +28,11 @@ public class TeacherController {
     public Response<TeacherResponseDto> register(@RequestBody TeacherRequestDto teacherRequestDto) {
         TeacherResponseDto teacherResponseDto = teacherService.addTeacherInfo(teacherRequestDto);
         return Response.success(teacherResponseDto);
+    }
+
+    @PostMapping("/login")
+    public Response<String> login(@RequestBody TeacherRequestDto teacherRequestDto) {
+        String token = teacherService.promptToken(teacherRequestDto.getUserName(), teacherRequestDto.getPassword());
+        return Response.success(token);
     }
 }
