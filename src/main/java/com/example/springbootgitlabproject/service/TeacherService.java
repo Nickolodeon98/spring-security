@@ -7,6 +7,8 @@ import com.example.springbootgitlabproject.domain.dto.TeacherResponseDto;
 import com.example.springbootgitlabproject.exception.ErrorCode;
 import com.example.springbootgitlabproject.exception.TeacherException;
 import com.example.springbootgitlabproject.repository.TeacherRepository;
+import com.example.springbootgitlabproject.utils.JwtTokenUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,11 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
     private final BCryptPasswordEncoder pwdEncoder;
+
+    @Value("${jwt.token.secret}")
+    private String secretKey;
+
+    private final long expiryTimeMs = 1000 * 60 * 60;
 
     public TeacherService(TeacherRepository teacherRepository, BCryptPasswordEncoder pwdEncoder) {
         this.teacherRepository = teacherRepository;
@@ -45,6 +52,7 @@ public class TeacherService {
         if (!pwdEncoder.matches(password, foundTeacher.getPassword()))
             throw new TeacherException(ErrorCode.PASSWORD_ERROR, ErrorCode.PASSWORD_ERROR.getMessage());
 //        TODO: 성공 시 토큰을 발급한다.
-        return "";
+
+        return JwtTokenUtils.createToken(userName, secretKey, expiryTimeMs);
     }
 }
