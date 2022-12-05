@@ -1,5 +1,6 @@
 package com.example.springbootgitlabproject.domain.dto;
 
+import com.example.springbootgitlabproject.domain.UserRole;
 import com.example.springbootgitlabproject.domain.entity.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class TeacherRequestDto {
                 .password(encoder.encode(password))
                 .name(name)
                 .age(age)
+                .userRole(UserRole.USER)
                 .build();
     }
 }
