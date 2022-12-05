@@ -1,12 +1,10 @@
 package com.example.springbootgitlabproject.domain.entity;
 
+import com.example.springbootgitlabproject.domain.UserRole;
 import com.example.springbootgitlabproject.domain.dto.TeacherResponseDto;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -24,6 +22,9 @@ public class Teacher {
     private String password;
     private String name;
     private int age;
+
+    @Enumerated(EnumType.STRING) // 의미하는 것이 무엇인지?
+    private UserRole userRole;
 
     public static TeacherResponseDto of(Teacher teacher) {
         return TeacherResponseDto.builder().name(teacher.getName()).age(teacher.getAge()).build();
