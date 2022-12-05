@@ -55,4 +55,10 @@ public class TeacherService {
 
         return JwtTokenUtils.createToken(userName, secretKey, expiryTimeMs);
     }
+
+
+    public Teacher getTeacherByUserName(String userName) {
+        return teacherRepository.findByUserName(userName)
+                .orElseThrow(()->new TeacherException(ErrorCode.NOT_FOUND_ERROR, ErrorCode.NOT_FOUND_ERROR.getMessage()));
+    }
 }
