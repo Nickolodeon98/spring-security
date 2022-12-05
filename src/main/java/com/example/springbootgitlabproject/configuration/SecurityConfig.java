@@ -2,6 +2,7 @@ package com.example.springbootgitlabproject.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,8 +19,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/teachers/**").permitAll()
-                .antMatchers("/api/v1/teachers/test").permitAll() // join, login은 언제나 가능
+                .antMatchers("/api/v1/teachers/test", "/api/v1/teachers/login").permitAll()
+                .antMatchers(HttpMethod.POST).authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt사용하는 경우 씀
