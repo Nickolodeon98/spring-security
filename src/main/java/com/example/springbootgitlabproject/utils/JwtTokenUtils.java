@@ -8,6 +8,14 @@ import java.util.Date;
 
 public class JwtTokenUtils {
 
+    private static Claims extractClaims(String token, String key) {
+        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+    }
+
+    public static String getUserName(String token, String key) {
+        return extractClaims(token, key).get("userName").toString();
+    }
+
     public static String createToken(String userName, String key, long expireTimeMs) {
         Claims claims = Jwts.claims();
 
@@ -19,5 +27,9 @@ public class JwtTokenUtils {
                 .setExpiration(new Date(System.currentTimeMillis() + expireTimeMs))
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
+    }
+
+    public static boolean isExpired(String token, String secretKey) {
+        return false;
     }
 }
